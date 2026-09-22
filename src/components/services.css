@@ -3,13 +3,14 @@
 .services {
   display: grid;
   gap: 18px;
-  /* Abaixo de 900px os cartoes empilham em coluna unica e centrada: os tres
+  /* Abaixo de 900px os cartoes empilham em coluna unica e centrada: os dois
      mantem exatamente o mesmo tamanho e o enquadramento original 3:2. */
   max-width: 520px;
   margin-inline: auto;
 }
 
 .service-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -22,9 +23,37 @@
 }
 
 .service-card:hover {
-  border-color: #c3d4c6;
+  border-color: var(--c-border-strong);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+}
+
+/* Destaque do foco principal: borda e elevacao proprias, nunca so cor. */
+.service-card--featured {
+  border-color: var(--c-border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.service-card--featured:hover {
+  border-color: var(--c-primary);
+}
+
+/* Sobre a imagem, nao dentro do corpo: sem isso o rotulo empurraria o titulo
+   do cartao em destaque e desalinharia os dois cartoes lado a lado. */
+.service-card__badge {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  padding: 5px 12px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-sm);
+  color: var(--c-primary);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .service-card__media {
@@ -85,7 +114,7 @@
   color: var(--c-primary);
 }
 
-/* `margin-top: auto` alinha os botoes dos tres cartoes na mesma linha. */
+/* `margin-top: auto` alinha os botoes dos dois cartoes na mesma linha. */
 .service-card__cta {
   margin-top: auto;
 }
@@ -105,7 +134,9 @@
 
 @media (min-width: 900px) {
   .services {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Duas colunas iguais: o destaque vem do rotulo e da borda, nao do tamanho,
+       entao titulos, listas e botoes continuam alinhados entre os cartoes. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px;
     max-width: none;
   }

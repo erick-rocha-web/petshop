@@ -1,5 +1,8 @@
-# Previa comercial da Essencia Animal Vet, publicada apenas para avaliacao.
-# O bloqueio e intencional e acompanha a meta tag "noindex, nofollow".
-# Isso orienta mecanismos de busca; nao e controle de acesso.
+# Previa comercial da Animalandia Pet Shop, publicada apenas para avaliacao.
+# O bloqueio e intencional e acompanha a meta tag "noindex, nofollow" do
+# index.html. Isso orienta mecanismos de busca; nao e controle de acesso.
+#
+# Na publicacao definitiva autorizada, troque as duas linhas abaixo por
+# "Disallow:" (vazio) e remova a meta robots do index.html.
 User-agent: *
 Disallow: /

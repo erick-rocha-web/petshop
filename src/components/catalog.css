@@ -1,0 +1,150 @@
+/* Bloco compacto de categorias: icone + nome, sem cartao grande por item. */
+
+.catalog {
+  margin-top: 36px;
+  padding-top: 32px;
+  border-top: 1px solid var(--c-border);
+}
+
+.catalog__head {
+  margin-bottom: 22px;
+}
+
+.catalog__group + .catalog__group {
+  margin-top: 20px;
+}
+
+.catalog__group-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* O grupo dos animais diz, sem rodeios, que eles sao vendidos na loja. */
+.catalog__group-note {
+  color: var(--c-text-muted);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/*
+ * Numero de colunas fixo por faixa, definido por medicao e nao por gosto: com
+ * `auto-fill` sobravam trilhas vazias e os cartoes ficavam estreitos demais, e o
+ * item mais largo ("Medicamentos", que nao pode quebrar no meio da palavra)
+ * precisa de ~210 px. Cada faixa abaixo so acrescenta uma coluna quando todas
+ * continuam com pelo menos essa largura; no celular fica uma coluna, porque uma
+ * lista confortavel e melhor do que um rotulo cortado.
+ */
+.catalog__items {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 600px) {
+  .catalog__items {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 780px) {
+  .catalog__items {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.catalog__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  height: 100%;
+  padding: 10px 12px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+    transform var(--t-base) var(--ease);
+}
+
+.catalog__item:hover {
+  border-color: var(--c-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.catalog__item-badge {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-sm);
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+}
+
+.catalog__item-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.catalog__item-label {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Marca discreta de que o link abre uma conversa, nao uma pagina de compra. */
+.catalog__item-mark {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-left: auto;
+  color: var(--c-text-muted);
+}
+
+.catalog__item:hover .catalog__item-mark {
+  color: var(--c-primary);
+}
+
+.catalog__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.catalog__note {
+  max-width: 46rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 900px) {
+  .catalog {
+    margin-top: 44px;
+    padding-top: 40px;
+  }
+
+  .catalog__foot {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .catalog__items {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

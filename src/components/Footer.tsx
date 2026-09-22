@@ -1,12 +1,13 @@
 /**
- * Rodape (SDD 3.7).
+ * Rodape.
  *
- * Identifica a demonstracao e a autoria da proposta. Nao afirma "site oficial",
- * nao exibe contratacao e nao inclui icone de rede social sem URL confirmada
- * nem pagina de privacidade ficticia.
+ * Nome, endereco completo e telefone da Animalandia, mais a identificacao da
+ * demonstracao e a autoria da proposta. Nao afirma "site oficial", nao exibe
+ * contratacao e nao inclui icone de rede social sem URL confirmada nem pagina de
+ * privacidade ficticia.
  */
 import { business, preview } from '../data/business';
-import { telLink } from '../lib/contact';
+import { mapsLink, telLink } from '../lib/contact';
 import { ExternalIcon } from './Icons';
 import './footer.css';
 
@@ -20,7 +21,13 @@ export function Footer() {
         </div>
 
         <ul className="footer__contacts">
-          <li>{business.city}</li>
+          <li>
+            <address className="footer__address">
+              {business.address.line1}
+              <br />
+              {business.address.line2} · CEP {business.address.zip}
+            </address>
+          </li>
           <li>
             <a className="footer__link" href={telLink()}>
               {business.phoneDisplay}
@@ -29,7 +36,7 @@ export function Footer() {
           <li>
             <a
               className="footer__link"
-              href={business.mapsUrl}
+              href={mapsLink()}
               target="_blank"
               rel="noopener noreferrer"
             >

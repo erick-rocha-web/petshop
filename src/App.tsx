@@ -9,6 +9,7 @@ import { useCallback, useRef, useState } from 'react';
 import type { IntentId } from './data/business';
 import { preview } from './data/business';
 import { About } from './components/About';
+import { Catalog } from './components/Catalog';
 import { ContactIntent } from './components/ContactIntent';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
@@ -64,6 +65,7 @@ export function App() {
         <section className="section section--alt" id="servicos">
           <div className="container">
             <Services selected={intent} onSelect={selectIntent} />
+            <Catalog />
             <ContactIntent ref={intentRef} selected={intent} onSelect={selectIntent} />
           </div>
         </section>

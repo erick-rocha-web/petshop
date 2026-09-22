@@ -5,61 +5,74 @@
  * servicos, mensagens de WhatsApp e textos das secoes. Nenhum componente repete
  * esses valores.
  *
- * REGRA DE CONTEUDO: so entram aqui dados confirmados pela empresa (perfil do
- * Google Maps + conversa no WhatsApp em 22/09/2026). Campos nao confirmados
- * ficam ausentes de proposito e estao listados em `pendencias`.
+ * REGRA DE CONTEUDO: so entram aqui dados confirmados pela Animalandia Pet Shop
+ * (cadastro do Google + retorno da propria empresa: "Nosso maior foco e banho e
+ * tosa"). O que nao foi confirmado — grade de horarios, precos, area e taxa de
+ * entrega, marcas, modalidades de banho e tosa — fica ausente de proposito e
+ * esta listado em `docs/spec.md`.
  */
 
-export type IntentId = 'geral' | 'horario' | 'veterinario' | 'banho' | 'petstore';
+/** Assuntos possiveis de contato. Cada um tem uma mensagem propria de WhatsApp. */
+export type IntentId = 'geral' | 'banho' | 'produtos';
 
 export const business = {
   /** Nome apresentado na interface. */
-  name: 'Essência Animal Vet',
-  /** Forma curta da descricao do Maps ("Pet Shop, Clínica Veterinária e Pet Store"). */
-  shortDescription: 'Clínica veterinária, banho e tosa e Pet Store',
-  city: 'Taguatinga Sul, Brasília — DF',
-  cityShort: 'Taguatinga Sul',
+  name: 'Animalandia Pet Shop',
+  /** Forma curta usada no rodape e nos metadados. */
+  shortDescription: 'Banho e tosa, rações, brinquedos e acessórios para pets',
+  city: 'Setor Garavelo, Aparecida de Goiânia — GO',
+  cityShort: 'Setor Garavelo',
 
   /** Telefone que tambem e o WhatsApp. Formato de exibicao. */
-  phoneDisplay: '(61) 99813-5153',
-  /** String internacional usada para montar TODOS os links de WhatsApp. Nao alterar digitos. */
-  whatsappNumber: '5561998135153',
+  phoneDisplay: '(62) 98541-0004',
+  /** String internacional usada para montar TODOS os links de WhatsApp e `tel:`. Nao alterar digitos. */
+  whatsappNumber: '5562985410004',
 
   address: {
-    line1: 'St. A Sul QSA 22, Lote 1',
-    line2: 'Taguatinga Sul, Brasília — DF',
-    zip: '72015-220',
-  },
-
-  /** Perfil fornecido por Erick (CID do Google Maps mantido como string). */
-  mapsUrl: 'https://www.google.com/maps?cid=4402007383073806765',
-
-  /** Retrato do Maps, nao um dado atualizado ao vivo. */
-  rating: {
-    score: '4,9',
-    count: 122,
-    checkedOn: '22/09/2026',
+    line1: 'Av. da Paz, S/N — Qd. 146 Lt. 04',
+    line2: 'St. Garavelo, Aparecida de Goiânia — GO',
+    zip: '74930-570',
   },
 
   /**
-   * A empresa informou apenas "atendimento com horário agendado".
-   * Os horarios de cada dia da semana NAO foram confirmados e por isso nao existem aqui.
+   * Consulta usada para montar o link do Google Maps em `mapsLink()`.
+   * E uma BUSCA por nome + endereco: nao inventamos Place ID nem coordenadas.
    */
-  scheduling: 'Atendimento com horário agendado',
-  schedulingNote: 'Consulte a disponibilidade pelo WhatsApp.',
+  mapsQuery:
+    'Animalandia Pet Shop, Av. da Paz, S/N - Qd. 146 Lt 04 - St. Garavelo, Aparecida de Goiânia - GO, 74930-570',
 
   /**
-   * Fotos reais autorizadas da empresa. Enquanto a lista estiver vazia, a secao
-   * "Conheça" usa a composicao ilustrativa. Basta preencher com
-   * { src, alt } para a galeria aparecer no lugar.
+   * A empresa NAO informou a grade semanal. O horario visto no Maps ("fecha as
+   * 19h") e um estado momentaneo e nao permite deduzir os dias e horarios, entao
+   * a pagina so oferece a consulta pelo WhatsApp.
+   */
+  scheduling: 'Horários consultados pelo WhatsApp',
+  schedulingNote: 'A equipe informa os horários disponíveis para banho e tosa.',
+
+  /**
+   * Fotos reais autorizadas da loja. Enquanto a lista estiver vazia, a secao
+   * "Conheca" usa a composicao ilustrativa. Basta preencher com { src, alt }
+   * para a galeria aparecer no lugar.
    */
   realPhotos: [] as Array<{ src: string; alt: string }>,
 } as const;
 
-/** Um cartao de servico da secao "Como podemos ajudar seu pet?". */
+/** Facilidades registradas no cadastro da loja. Nada aqui foi deduzido. */
+export type StoreFeatureId = 'retirada' | 'entrega' | 'estacionamento' | 'acessibilidade';
+
+export const storeFeatures: Array<{ id: StoreFeatureId; label: string }> = [
+  { id: 'retirada', label: 'Compras e retirada na loja' },
+  { id: 'entrega', label: 'Entrega' },
+  { id: 'estacionamento', label: 'Estacionamento gratuito no local' },
+  { id: 'acessibilidade', label: 'Entrada acessível a cadeirantes' },
+];
+
+/** Um cartao da secao "Serviços". */
 export type Service = {
-  id: Extract<IntentId, 'veterinario' | 'banho' | 'petstore'>;
+  id: Exclude<IntentId, 'geral'>;
   title: string;
+  /** O cartao em destaque recebe o rotulo `badge` e o acabamento principal. */
+  badge?: string;
   description: string;
   /** Ate quatro itens, todos respaldados pelo material fornecido. */
   items: string[];
@@ -76,25 +89,12 @@ export type Service = {
 
 export const services: Service[] = [
   {
-    id: 'veterinario',
-    title: 'Atendimento veterinário',
-    description: 'Consultas e exames com horário agendado, no mesmo endereço.',
-    items: ['Consultas', 'Vacinação', 'Exames laboratoriais', 'Exames complementares'],
-    ctaLabel: 'Solicitar atendimento',
-    image: {
-      src: '/images/servico-atendimento-veterinario-720.webp',
-      srcSet:
-        '/images/servico-atendimento-veterinario-480.webp 480w, /images/servico-atendimento-veterinario-720.webp 720w',
-      alt: 'Gato cinza e branco deitado sobre uma toalha clara, ao lado de um estetoscópio.',
-      width: 720,
-      height: 480,
-    },
-  },
-  {
     id: 'banho',
     title: 'Banho e tosa',
-    description: 'Centro de estética para o dia a dia do seu pet.',
-    items: ['Banho', 'Tosa', 'Toalhas descartáveis', 'Cromoterapia'],
+    badge: 'Nosso maior foco',
+    description:
+      'O serviço principal da loja. Fale com a equipe para combinar o atendimento do seu pet.',
+    items: ['Banho', 'Tosa', 'Horários consultados pelo WhatsApp'],
     ctaLabel: 'Consultar horários',
     image: {
       src: '/images/servico-banho-e-tosa-720.webp',
@@ -105,10 +105,11 @@ export const services: Service[] = [
     },
   },
   {
-    id: 'petstore',
-    title: 'Pet Store',
-    description: 'Produtos e medicamentos para pets no balcão da clínica.',
-    items: ['Produtos para pets', 'Medicamentos', 'Disponibilidade confirmada pela equipe', 'Valores informados no contato'],
+    id: 'produtos',
+    title: 'Produtos e acessórios',
+    description:
+      'Rações, brinquedos, acessórios e outros itens para o dia a dia. Compras e retirada na loja, com entrega.',
+    items: ['Compras e retirada na loja', 'Entrega', 'Disponibilidade consultada pelo WhatsApp'],
     ctaLabel: 'Consultar produtos',
     image: {
       src: '/images/servico-pet-store-720.webp',
@@ -120,6 +121,94 @@ export const services: Service[] = [
   },
 ];
 
+/**
+ * "Tambem temos na loja".
+ *
+ * Categorias confirmadas pela propria empresa no WhatsApp. Nao ha marca, preco,
+ * especie de peixe, raca de coelho nem quantidade em estoque: nada disso foi
+ * informado, e a disponibilidade e sempre remetida a equipe.
+ *
+ * Peixes e coelhos sao ANIMAIS VENDIDOS na loja. Ficam num grupo proprio
+ * justamente para nao serem lidos como atendimento, banho, tosa ou servico
+ * veterinario para essas especies.
+ *
+ * Medicamentos entram so como categoria a venda. A pagina nao orienta uso,
+ * dosagem, indicacao terapeutica nem dispensa receita.
+ */
+export type CategoryId =
+  | 'racoes'
+  | 'medicamentos'
+  | 'brinquedos'
+  | 'acessorios'
+  | 'peixes'
+  | 'coelhos';
+
+export type CatalogGroup = {
+  title: string;
+  /** Texto curto que enquadra o grupo; nada aqui promete estoque. */
+  note?: string;
+  categories: Array<{
+    id: CategoryId;
+    label: string;
+    /** Mensagem propria da categoria, codificada por `whatsappLinkFor`. */
+    message: string;
+  }>;
+};
+
+export const catalog: CatalogGroup[] = [
+  {
+    title: 'Produtos',
+    categories: [
+      {
+        id: 'racoes',
+        label: 'Rações',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de rações na loja.',
+      },
+      {
+        id: 'brinquedos',
+        label: 'Brinquedos',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de brinquedos na loja.',
+      },
+      {
+        id: 'acessorios',
+        label: 'Acessórios pet',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de acessórios pet na loja.',
+      },
+      {
+        id: 'medicamentos',
+        label: 'Medicamentos',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de medicamentos na loja.',
+      },
+    ],
+  },
+  {
+    title: 'Animais à venda',
+    note: 'Vendidos na loja.',
+    categories: [
+      {
+        id: 'peixes',
+        label: 'Peixes',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de peixes na loja.',
+      },
+      {
+        id: 'coelhos',
+        label: 'Coelhos',
+        message:
+          'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de coelhos na loja.',
+      },
+    ],
+  },
+];
+
+/** Aviso institucional da categoria de medicamentos. Nao e orientacao de uso. */
+export const medicinesNote =
+  'Medicamentos são vendidos na loja e a equipe informa a disponibilidade. Esta página não indica uso, dosagem nem substitui a orientação de um médico-veterinário.';
+
 export const heroImage = {
   src: '/images/hero-cachorro-e-gato-1200.webp',
   srcSet: '/images/hero-cachorro-e-gato-800.webp 800w, /images/hero-cachorro-e-gato-1200.webp 1200w',
@@ -129,48 +218,43 @@ export const heroImage = {
 };
 
 /**
- * Mensagens preparadas para o WhatsApp. A pessoa revisa e envia; o site nunca envia sozinho.
- * Sao textos de contato, nunca confirmacao de agendamento.
+ * Mensagens preparadas para o WhatsApp. A pessoa revisa e envia; o site nunca
+ * envia sozinho. Sao textos de CONSULTA — nenhuma confirma horario reservado.
  */
 export const whatsappMessages: Record<IntentId, string> = {
-  geral: 'Olá! Vi a página da Essência Animal Vet e gostaria de saber mais sobre os serviços.',
-  horario:
-    'Olá! Vi a página da Essência Animal Vet e gostaria de consultar os horários disponíveis para atendimento.',
-  veterinario:
-    'Olá! Gostaria de informações sobre atendimento veterinário na Essência Animal Vet e de consultar os horários disponíveis.',
+  geral: 'Olá, pessoal da Animalandia! Vi a página de vocês e gostaria de falar com a equipe.',
   banho:
-    'Olá! Gostaria de saber mais sobre o banho e tosa da Essência Animal Vet e consultar os horários disponíveis.',
-  petstore:
-    'Olá! Gostaria de consultar a disponibilidade e os valores de produtos na Pet Store da Essência Animal Vet.',
+    'Olá, pessoal da Animalandia! Gostaria de saber sobre o banho e tosa e consultar os horários disponíveis.',
+  produtos:
+    'Olá, pessoal da Animalandia! Gostaria de consultar a disponibilidade de um produto ou animal na loja.',
 };
 
 /** Rotulos dos assuntos na area "Vamos conversar?". */
-export const intentLabels: Record<Exclude<IntentId, 'horario'>, string> = {
+export const intentLabels: Record<IntentId, string> = {
   geral: 'Dúvida geral',
-  veterinario: 'Atendimento veterinário',
   banho: 'Banho e tosa',
-  petstore: 'Pet Store',
+  produtos: 'Produtos e acessórios',
 };
 
 export const faq = [
   {
-    question: 'Preciso marcar um horário?',
+    question: 'Como consultar um horário para banho e tosa?',
     answer:
-      'Sim. A empresa informa que o atendimento é realizado com horário agendado. Entre em contato para consultar a disponibilidade.',
+      'Pelo WhatsApp. A equipe informa os horários disponíveis e combina o atendimento com você. A página não reserva horário.',
   },
   {
-    question: 'Quais serviços veterinários vocês oferecem?',
-    answer:
-      'Consultas, vacinas e exames laboratoriais e complementares. Consulte a equipe para saber mais sobre o atendimento que seu pet precisa.',
+    question: 'Onde fica a loja?',
+    answer: `Na ${business.address.line1}, ${business.address.line2}, CEP ${business.address.zip}. O botão de localização abre o endereço no Google Maps.`,
   },
   {
-    question: 'Vocês têm banho e tosa?',
+    question: 'O que a loja vende, além do banho e tosa?',
     answer:
-      'A empresa conta com centro de estética e serviços de banho e tosa. Os detalhes e horários são confirmados pelo WhatsApp.',
+      'Rações, brinquedos, acessórios pet e medicamentos, e também peixes e coelhos. Entre em contato com a equipe pelo WhatsApp para confirmar a disponibilidade do que você procura.',
   },
   {
-    question: 'Posso consultar produtos e medicamentos pelo WhatsApp?',
-    answer: 'Sim, você pode falar com a equipe para consultar a disponibilidade e os valores.',
+    question: 'A loja tem estacionamento e entrada acessível?',
+    answer:
+      'O cadastro da loja informa estacionamento gratuito no local e entrada acessível a cadeirantes.',
   },
 ];
 

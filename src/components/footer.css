@@ -28,6 +28,11 @@
   gap: 8px;
 }
 
+.footer__address {
+  font-style: normal;
+  line-height: 1.55;
+}
+
 .footer__link {
   display: inline-flex;
   align-items: center;

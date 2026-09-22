@@ -1,9 +1,12 @@
 /**
- * Os tres nucleos do negocio (SDD 3.3).
+ * Servicos da loja.
+ *
+ * Banho e tosa vem primeiro e recebe o cartao em destaque — foi o que a propria
+ * empresa confirmou como foco principal. Produtos e acessorios aparecem como
+ * informacao secundaria, com a disponibilidade sempre remetida ao WhatsApp.
  *
  * Os cartoes tem o mesmo tamanho e as imagens ocupam exatamente a mesma area em
- * todos os tamanhos de tela. Nenhum carrossel: no celular os cartoes empilham e
- * todos os servicos continuam visiveis.
+ * todos os tamanhos de tela. Nenhum carrossel: no celular os cartoes empilham.
  *
  * O botao de cada cartao apenas seleciona o assunto na area "Vamos conversar?"
  * logo abaixo. Nao abre o WhatsApp.
@@ -11,13 +14,12 @@
 import type { IntentId } from '../data/business';
 import { services } from '../data/business';
 import { Figure } from './Figure';
-import { CheckIcon, ScissorsIcon, StethoscopeIcon, StoreIcon } from './Icons';
+import { CheckIcon, ScissorsIcon, StoreIcon } from './Icons';
 import './services.css';
 
 const ICONS: Record<string, (props: { className?: string }) => React.JSX.Element> = {
-  veterinario: StethoscopeIcon,
   banho: ScissorsIcon,
-  petstore: StoreIcon,
+  produtos: StoreIcon,
 };
 
 type ServicesProps = {
@@ -30,9 +32,9 @@ export function Services({ selected, onSelect }: ServicesProps) {
     <>
       <div className="section__head">
         <span className="section__eyebrow">Serviços</span>
-        <h2 className="section__title">Como podemos ajudar seu pet?</h2>
+        <h2 className="section__title">Banho e tosa é o nosso maior foco.</h2>
         <p className="section__text">
-          Três áreas no mesmo endereço. Escolha um assunto para preparar a mensagem de contato.
+          Escolha um assunto para preparar a mensagem e falar com a equipe.
         </p>
       </div>
 
@@ -42,12 +44,19 @@ export function Services({ selected, onSelect }: ServicesProps) {
           const isSelected = selected === service.id;
 
           return (
-            <li key={service.id} className="service-card">
+            <li
+              key={service.id}
+              className={['service-card', service.badge && 'service-card--featured']
+                .filter(Boolean)
+                .join(' ')}
+            >
+              {service.badge && <span className="service-card__badge">{service.badge}</span>}
+
               <Figure
                 className="service-card__media"
                 src={service.image.src}
                 srcSet={service.image.srcSet}
-                sizes="(min-width: 900px) 360px, (min-width: 640px) 40vw, 100vw"
+                sizes="(min-width: 900px) 540px, 100vw"
                 alt={service.image.alt}
                 width={service.image.width}
                 height={service.image.height}

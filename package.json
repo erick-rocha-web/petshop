@@ -1,9 +1,9 @@
 {
-  "name": "essencia-animal-vet-mvp",
+  "name": "animalandia-petshop-mvp",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Previa de site institucional para a Essencia Animal Vet (Taguatinga Sul, Brasilia - DF).",
+  "description": "Previa de site institucional para a Animalandia Pet Shop (Setor Garavelo, Aparecida de Goiania - GO).",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

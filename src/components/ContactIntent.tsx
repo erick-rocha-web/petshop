@@ -15,7 +15,7 @@ import { whatsappLink, whatsappMessage } from '../lib/contact';
 import { WhatsAppIcon } from './Icons';
 import './contact-intent.css';
 
-const OPTIONS = Object.entries(intentLabels) as Array<[Exclude<IntentId, 'horario'>, string]>;
+const OPTIONS = Object.entries(intentLabels) as Array<[IntentId, string]>;
 
 type ContactIntentProps = {
   selected: IntentId;
@@ -68,8 +68,9 @@ export const ContactIntent = forwardRef<HTMLDivElement, ContactIntentProps>(
             Continuar no WhatsApp
           </a>
           <p className="intent__disclaimer">
-            Nada é enviado automaticamente. O WhatsApp abre com o texto pronto para você revisar e o
-            horário é combinado com a equipe pelo número {business.phoneDisplay}.
+            Nada é enviado automaticamente e nenhum horário fica reservado por aqui. O WhatsApp abre
+            com o texto pronto para você revisar, e a equipe confirma a disponibilidade pelo número{' '}
+            {business.phoneDisplay}.
           </p>
         </div>
       </div>

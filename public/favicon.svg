@@ -1,9 +1,9 @@
-<!-- Marca provisoria: monograma tipografico da previa, nao o logotipo oficial da empresa. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Essência Animal Vet">
-  <rect width="64" height="64" rx="16" fill="#164A3D" />
+<!-- Marca provisoria: monograma tipografico da previa, nao o logotipo oficial da loja. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Animalandia Pet Shop">
+  <rect width="64" height="64" rx="16" fill="#15586B" />
   <path
-    d="M24 20h17v6.2H30.8v6.1h9.4v6.1h-9.4v6.4H41.4V51H24z"
-    fill="#F7F6F2"
+    d="M32 14 44.5 50h-7.2l-2.3-7.1H21L18.7 50h-7.2Zm0 12.4-4.9 11.3h9.8Z"
+    fill="#F6F4EF"
   />
-  <circle cx="45" cy="17" r="4.2" fill="#D7AE7C" />
+  <circle cx="46" cy="18" r="4.2" fill="#F0A05A" />
 </svg>

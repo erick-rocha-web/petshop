@@ -1,135 +1,135 @@
-# Validação — Essência Animal Vet (prévia)
+# Validação — Animalandia Pet Shop (prévia)
 
-Resultado real das verificações executadas em 22/09/2026, no build de produção
-servido por `npm run preview` (`http://localhost:4173/`), salvo onde indicado.
+Resultado real das verificações executadas em 22/09/2026, sobre o build de
+produção servido por `npm run preview` (`http://localhost:4173/`).
 
-Ambiente: Windows 11, Node 24.14.0, npm 11.9.0, Chrome 1374×724 CSS (janela
-maximizada, `devicePixelRatio` 1,25).
+Ambiente: Windows 11, Node 24.14.0, npm 11.9.0, Chrome.
 
 ## 1. Build e testes
 
 ```
 npm run build     tsc --noEmit + vite build — concluído sem erros
-                  dist/index.html    1,28 kB  (gzip 0,69 kB)
-                  dist/assets/*.css 20,08 kB  (gzip 4,75 kB)
-                  dist/assets/*.js 243,23 kB  (gzip 75,11 kB)
+                  dist/index.html     2,35 kB  (gzip 1,07 kB)
+                  dist/assets/*.css  23,57 kB  (gzip 5,20 kB)
+                  dist/assets/*.js  248,80 kB  (gzip 76,26 kB)
 
-npm test          8 testes, 8 passando (src/lib/contact.test.ts)
+npm test          19 testes, 19 passando (src/lib/contact.test.ts)
 ```
 
-O teste cobre o ponto que o SDD marcou como prioritário: número correto em todos
-os assuntos, 13 dígitos sem acréscimo ou remoção, acentos preservados após
-`decodeURIComponent`, correspondência entre serviço escolhido e mensagem,
-mensagens distintas por assunto e ausência de texto que prometa confirmação.
+Os testes cobrem:
 
-## 2. Lighthouse
+- **WhatsApp** — número `5562985410004` em todos os assuntos, 13 dígitos sem
+  acréscimo nem remoção, acentos preservados depois de `decodeURIComponent`,
+  correspondência entre serviço e mensagem, mensagens distintas por assunto e
+  ausência de texto que prometa horário confirmado.
+- **Mapa** — busca com o endereço codificado, sem Place ID, CID ou coordenadas.
+- **Catálogo** — as seis categorias confirmadas estão presentes; peixes e
+  coelhos ficam no grupo de animais à venda e nenhum texto desse grupo menciona
+  banho, tosa, atendimento ou veterinário; cada categoria gera um link válido e
+  codificado; nada de marca, preço, estoque, espécie ou raça; o aviso de
+  medicamentos fala de disponibilidade e não de uso, dosagem ou indicação.
+- **Herança** — o teste falha se `Essência`, `Essencia`, o telefone, o CEP, a
+  cidade ou o CID da empresa anterior reaparecerem em qualquer campo publicado.
+- **Serviços não confirmados** — falha se surgir vacina, exame, consulta
+  clínica, cromoterapia ou atendimento veterinário.
+- **Dados inventados** — falha se aparecer horário fixo, preço ou contagem de
+  avaliações.
 
-Executado com Lighthouse 13.5.0 sobre o build de produção, Chrome headless.
+Validar o formato dos links **não é testar o envio**: nenhuma mensagem foi
+enviada para o número da loja em momento algum.
 
-| Perfil | Desempenho | Acessibilidade | Boas práticas | SEO |
-| --- | --- | --- | --- | --- |
-| Mobile | **99** | **100** | **100** | 66 |
-| Desktop | **100** | **100** | **100** | não auditado |
+## 2. Links da página renderizada
 
-Métricas mobile: FCP 1,4 s · LCP 2,2 s · TBT 0 ms · CLS 0.
-Métricas desktop: LCP 0,5 s · TBT 0 ms · CLS 0.
+Auditoria dos `href` da página montada no navegador (build de produção):
 
-**Sobre o SEO 66:** a única auditoria reprovada é `is-crawlable` — "Page is
-blocked from indexing". Isso é intencional e exigido pelo SDD (seção 7): a
-prévia leva `noindex, nofollow` e um `robots.txt` que bloqueia rastreadores.
-Quando a empresa aprovar o site, basta remover a meta tag e o `robots.txt` para
-essa nota subir. Nenhuma outra auditoria de SEO falhou.
+| Verificação | Resultado |
+| --- | --- |
+| Links totais | 30 |
+| Links de WhatsApp | 14, todos em `https://wa.me/5562985410004` |
+| Links `tel:` | 2, ambos `tel:+5562985410004` |
+| Links do Google Maps | 4, todos a mesma busca codificada |
+| URLs com espaço não codificado | 0 |
+| `target="_blank"` sem `rel="noopener"` | 0 |
+| Links com dados da empresa anterior | 0 |
 
-## 3. Critérios de aceitação
+## 3. Layout em várias larguras
 
-| ID | Situação | Evidência |
-| --- | --- | --- |
-| AC-01 | Atende | A abertura nomeia a empresa, diz o que ela faz e onde fica, acima da dobra em desktop e celular. |
-| AC-02 | Atende | Cabeçalho 69 px no desktop e 61 px no celular; nenhuma seção usa altura de tela cheia. |
-| AC-03 | Atende | Os três cartões listam só serviços vindos do material fornecido. |
-| AC-04 | Atende | Os 7 links de WhatsApp da página usam `https://wa.me/5561998135153?text=`; conferido no DOM e por teste. |
-| AC-05 | Atende | Selecionar um serviço altera a prévia e o link, sem navegar nem enviar (verificado por script: URL inalterada). |
-| AC-06 | Atende | "Continuar no WhatsApp" usa o assunto escolhido; nenhum texto afirma reserva confirmada. |
-| AC-07 | Atende | Botão do Maps usa o CID fornecido; endereço idêntico ao da fonte de verdade. |
-| AC-08 | Atende | Sem preços, horários semanais, profissionais, credenciais, clientes ou resultados. |
-| AC-09 | Atende | "4,9 no Google · 122 avaliações" com "Dados consultados em 22/09/2026"; valor estático. |
-| AC-10 | Atende | Menu abre/fecha, Escape fecha e devolve o foco ao botão; FAQ em `<details>` nativo; foco visível global. |
-| AC-11 | Atende | `prefers-reduced-motion` desliga rolagem suave e transições; zoom 200 % equivale a ~687 px, largura verificada sem quebra. |
-| AC-12 | Atende | Sem rolagem horizontal em 320, 360, 390, 480, 600, 687, 720, 768, 900, 1024, 1280 e 1374 px. Barra móvel deixa 37 px de folga abaixo da última linha. |
-| AC-13 | Atende | Imagens com `width`/`height`, origem documentada e fallback testado com arquivo inexistente. |
-| AC-14 | Atende | Build concluído; console sem erros de aplicação ao percorrer a página, abrir todo o FAQ e trocar todos os assuntos. |
-| AC-15 | Atende | Faixa "Prévia de site para avaliação", rodapé com autoria, `noindex, nofollow` e `robots.txt`. |
-| AC-16 | Atende | Telefone, endereço, serviços, mensagens, avaliação e textos ficam em `src/data/business.ts`. |
+Cada largura foi carregada em um quadro de viewport exato e medida, não avaliada
+a olho. Larguras verificadas: **320, 360, 390, 430, 600, 768, 900, 1024, 1280 e
+1440 px**.
 
-## 4. Verificações executadas
+| Verificação | Resultado |
+| --- | --- |
+| Rolagem horizontal (`scrollX` após tentar rolar 800 px) | 0 em todas |
+| Elementos com conteúdo cortado | nenhum |
+| Colunas do catálogo | 1 → 2 → 3 → 4, conforme a faixa |
 
-### Links e conteúdo
-- 23 links na página; nenhum `href="#"` ou vazio.
-- 7 links de WhatsApp, todos com o número correto e mensagens codificadas.
-- Links externos: perfil do Maps (CID fornecido) e `tel:+5561998135153`.
-- Hierarquia de títulos: um `h1`, quatro `h2` de seção, `h3` nos cartões.
+As únicas sobras de conteúdo detectadas são as formas decorativas da abertura e
+da seção "Conheça", recortadas de propósito pelos seus contêineres.
 
-### Seleção de assunto (RF-02)
-Clicar no botão de um cartão marca o chip correspondente, e clicar num chip
-marca o botão do cartão — os dois estados ficam sincronizados. A prévia da
-mensagem e o link mudam junto. A URL da página não muda e nenhuma aba abre.
+**Correções feitas a partir dessas medições:**
 
-### Menu móvel (RF-01)
-Abrir (`aria-expanded=true`), Escape (fecha e o foco volta ao botão), reabrir,
-escolher um link (fecha e a âncora leva à seção). Rótulo alterna entre
-"Abrir menu" e "Fechar menu".
+1. O rótulo "Nosso maior foco" empurrava o título do cartão em destaque e
+   desalinhava os dois cartões lado a lado. Passou a ficar sobre a imagem.
+2. O catálogo com `auto-fill` deixava trilhas vazias e cartões estreitos, e o
+   rótulo "Medicamentos" (que precisa de ~210 px e não pode quebrar no meio da
+   palavra) era cortado em 320, 390 e 640 px. As faixas de coluna passaram a ser
+   explícitas, cada uma só acrescentando uma coluna quando todas continuam
+   cabendo nessa largura.
 
-### Âncoras
-Com o cabeçalho de 69 px, as quatro seções param a 80 px do topo da janela;
-nenhum título fica atrás do cabeçalho.
+## 4. Barra de contato do celular
 
-### Imagens
-As três imagens de serviço renderizam **exatamente no mesmo tamanho** em todas as
-larguras conferidas (por exemplo 334×222 em 390 px, 518×346 em 768 px, 357×237 em
-1374 px), sempre na proporção 3:2 original, sem recorte. Todas têm texto
-alternativo descritivo. O `srcset` entrega o arquivo de 480 px em telas menores e
-o de 720 px quando a densidade pede.
+Em 390 px, com a página rolada até o fim: a última linha do rodapé termina em
+680 px e a barra fixa começa em 717 px. **Não há sobreposição** — o `body`
+reserva o espaço equivalente.
 
-Fallback: ao apontar uma imagem para um arquivo inexistente, o componente marca
-`data-failed`, oculta o `img`, mantém a área reservada e mostra "Imagem
-indisponível" com o texto alternativo como `aria-label`. Os outros cartões
-continuam idênticos.
+## 5. Contraste da paleta
 
-### Contraste (mínimo exigido: 4,5:1)
-Menor valor medido: **5,03:1**. Amostras: texto secundário sobre fundo 5,44:1;
-sobre superfície branca 5,88:1; corpo sobre branco 13,24:1; nota do rodapé com
-alfa sobre a primária 7,36:1; chip selecionado 10,09:1; links de navegação
-5,88:1. A seleção nunca depende só de cor — muda borda, fundo, peso e marca.
+Calculado par a par a partir dos tokens de `src/styles/tokens.css`, pela fórmula
+de luminância relativa da WCAG.
 
-## 5. Limitações concretas
+| Par | Contraste |
+| --- | --- |
+| Texto sobre fundo | 12,02:1 |
+| Texto sobre superfície | 13,22:1 |
+| Texto sobre superfície alternativa | 12,66:1 |
+| Texto secundário sobre fundo | 5,05:1 |
+| Texto secundário sobre superfície | 5,55:1 |
+| Texto secundário sobre superfície alternativa | 5,31:1 |
+| Texto secundário sobre primária suave | 4,77:1 |
+| Primária sobre superfície | 7,95:1 |
+| Primária sobre fundo | 7,24:1 |
+| Branco sobre primária (botão) | 7,95:1 |
+| Branco sobre primária forte (hover) | 10,78:1 |
 
-- **Largura de 1440 px não foi testada diretamente.** A janela do Chrome estava
-  maximizada em 1536×864 físicos (1374×724 CSS) e não aceitou redimensionamento.
-  As larguras de 320 a 1374 px foram verificadas dentro de iframes de largura
-  fixa, que aplicam as media queries corretamente. Acima de 1120 px o conteúdo
-  fica travado na largura máxima, então 1440 px mostra o mesmo layout de 1374 px
-  com margens laterais maiores.
-- **Nenhuma mensagem foi enviada à empresa.** Só a composição dos links foi
-  verificada. O WhatsApp não foi aberto e nenhuma conta foi validada pelo
-  navegador.
-- **Lighthouse rodou contra `localhost`**, sem latência de rede real. Os números
-  acima valem como referência do build, não como medição de um site publicado.
-- **Sem fotos reais da empresa.** As quatro imagens são ilustrativas e estão
-  identificadas como tal na página.
-- **Sem dados de horário semanal, preços ou profissionais**, porque não foram
-  confirmados. A página direciona ao WhatsApp nesses pontos.
+**Mínimo: 4,77:1**, acima do mínimo de 4,5:1 da WCAG AA para texto normal.
 
-## 6. O que depende da empresa antes de virar site oficial
+A cor de detalhe (`--c-accent`) é usada apenas em elementos decorativos e no
+ícone de estrela do link de avaliações; nunca recebe texto sobre ela.
 
-1. **Identidade visual** — logotipo, paleta e tipografia reais. A paleta atual é
-   uma proposta e está inteiramente em `src/styles/tokens.css`.
-2. **Autorização dos materiais** — fotos reais do estabelecimento, da equipe e
-   dos serviços, com permissão de uso. Há lugar reservado para até três.
-3. **Horários completos** de abertura e fechamento por dia da semana.
-4. **Informações profissionais cabíveis** — nome e registro de quem responde
-   tecnicamente, se a empresa quiser exibir.
-5. **Revisão dos serviços** — confirmar a lista de cada área, espécies atendidas
-   e o que pode ser afirmado sobre a cromoterapia.
-6. **Canais** — domínio, e-mail comercial e redes sociais com URL confirmada.
-7. **Decisão sobre publicação** — remover `noindex`/`robots.txt` e definir onde
-   o site será hospedado.
+## 6. Alvos de toque
+
+Botões, opções de assunto, itens do catálogo e links de contato têm pelo menos
+44 px de altura. Duas exceções, herdadas do layout anterior e mantidas:
+
+- Links do rodapé (telefone e Google Maps): 26 px de altura, com espaçamento
+  entre eles. Passam no mínimo de 24×24 px da WCAG 2.5.8 (AA), mas ficam abaixo
+  da recomendação de 44 px.
+- Links de navegação e CTA do cabeçalho no desktop: 41–42 px, em um contexto de
+  mouse.
+
+## 7. O que não foi executado
+
+- **Lighthouse** não foi reexecutado nesta adaptação. As notas registradas na
+  versão anterior não valem para esta página e por isso não foram copiadas.
+- **Teste em aparelho real**: a conferência de celular foi feita em quadros de
+  viewport exata no Chrome de desktop, não em um telefone.
+- **Envio de mensagem pelo WhatsApp**: nenhum. Os links foram validados apenas
+  quanto a formato, número e codificação.
+- **Leitor de tela**: a marcação usa `aria-pressed`, `aria-label`, `aria-live` e
+  `<details>` nativo, mas não houve teste com NVDA ou VoiceOver.
+
+## 8. Capturas
+
+`docs/screenshots/` traz três capturas de desktop e duas de celular (390 px) do
+build atual, para enviar por mensagem sem precisar de um link.

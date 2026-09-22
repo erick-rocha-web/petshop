@@ -27,7 +27,7 @@
 }
 
 .faq__item[open] {
-  border-color: #c3d4c6;
+  border-color: var(--c-border-strong);
 }
 
 .faq__question {

@@ -24,17 +24,6 @@ export function WhatsAppIcon({ className }: IconProps) {
   );
 }
 
-export function StethoscopeIcon({ className }: IconProps) {
-  return (
-    <svg className={className} {...base}>
-      <path d="M6 3v5a4 4 0 0 0 8 0V3" />
-      <path d="M4.5 3h3M12.5 3h3" />
-      <path d="M10 12v2.5a5 5 0 0 0 10 0V13" />
-      <circle cx="20" cy="11" r="2" />
-    </svg>
-  );
-}
-
 export function ScissorsIcon({ className }: IconProps) {
   return (
     <svg className={className} {...base}>
@@ -112,10 +101,105 @@ export function CloseIcon({ className }: IconProps) {
   );
 }
 
-export function ArrowDownIcon({ className }: IconProps) {
+export function BagIcon({ className }: IconProps) {
   return (
     <svg className={className} {...base}>
-      <path d="M12 4.5v15M6 13.5l6 6 6-6" />
+      <path d="M5 8h14l-1 11.5a1.5 1.5 0 0 1-1.5 1.4h-9A1.5 1.5 0 0 1 6 19.5Z" />
+      <path d="M9 8V6.2a3 3 0 0 1 6 0V8" />
+    </svg>
+  );
+}
+
+export function TruckIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M3 6.5h10.5v9H3Z" />
+      <path d="M13.5 10h3.8l2.7 3v2.5h-6.5Z" />
+      <circle cx="7" cy="18" r="1.8" />
+      <circle cx="17" cy="18" r="1.8" />
+    </svg>
+  );
+}
+
+export function CarIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M4 14.5 5.8 9A2 2 0 0 1 7.7 7.6h8.6A2 2 0 0 1 18.2 9L20 14.5" />
+      <path d="M3.5 14.5h17V18a1 1 0 0 1-1 1h-1.6a1 1 0 0 1-1-1v-.6H7.1v.6a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1Z" />
+      <path d="M6.8 17h.01M17.2 17h.01" />
+    </svg>
+  );
+}
+
+export function AccessibleIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <circle cx="12.5" cy="4.5" r="1.8" />
+      <path d="M10 8.2h5" />
+      <path d="M11.4 8v5.2h4.2" />
+      <path d="M15.6 13.2 18 19" />
+      <circle cx="10" cy="16" r="4.2" />
+    </svg>
+  );
+}
+
+export function FoodBowlIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M3.6 12.2h16.8a8.4 8.4 0 0 1-16.8 0Z" />
+      <circle cx="8.8" cy="8.3" r="1.25" />
+      <circle cx="12.6" cy="6.4" r="1.25" />
+      <circle cx="16.1" cy="8.8" r="1.25" />
+    </svg>
+  );
+}
+
+export function PillIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <rect x="2.8" y="8.6" width="18.4" height="6.8" rx="3.4" transform="rotate(-45 12 12)" />
+      <path d="M9.6 9.6 14.4 14.4" />
+    </svg>
+  );
+}
+
+export function BallIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <circle cx="12" cy="12" r="8.2" />
+      <path d="M12 3.8c2.5 2.2 3.9 5 3.9 8.2S14.5 18 12 20.2" />
+      <path d="M12 3.8c-2.5 2.2-3.9 5-3.9 8.2S9.5 18 12 20.2" />
+    </svg>
+  );
+}
+
+export function CollarIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <ellipse cx="12" cy="10.2" rx="6.6" ry="5.1" />
+      <path d="M12 15.3v1.4" />
+      <circle cx="12" cy="18.6" r="1.9" />
+    </svg>
+  );
+}
+
+export function FishIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M16.2 12c0 2.7-2.5 4.9-5.6 4.9S5 14.7 5 12s2.5-4.9 5.6-4.9 5.6 2.2 5.6 4.9Z" />
+      <path d="M16.2 12 20.5 8.6v6.8Z" />
+      <path d="M8.4 10.6h.01" />
+    </svg>
+  );
+}
+
+export function RabbitIcon({ className }: IconProps) {
+  return (
+    <svg className={className} {...base}>
+      <path d="M9.4 9.7C8.7 7.2 8.5 4.8 9.3 4.5c.8-.3 1.9 1.6 2.6 4.1" />
+      <path d="M14.6 9.7c.7-2.5.9-4.9.1-5.2-.8-.3-1.9 1.6-2.6 4.1" />
+      <path d="M6.6 15.6a5.4 5.4 0 0 1 10.8 0v1.7a2.7 2.7 0 0 1-2.7 2.7H9.3a2.7 2.7 0 0 1-2.7-2.7Z" />
+      <path d="M10.4 14.6h.01M13.6 14.6h.01" />
     </svg>
   );
 }

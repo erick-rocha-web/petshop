@@ -1,15 +1,16 @@
 /**
- * Localizacao (SDD 3.5).
+ * Localizacao.
  *
- * Cartao de endereco com acabamento visual e link externo para o perfil real do
- * Maps. Sem mapa incorporado: nao ha embed oficial validado, e o SDD proibe
- * inventar coordenadas, chave de API ou imagem que simule uma rota.
+ * Cartao de endereco com acabamento visual e link externo para a busca da loja
+ * no Google Maps, montada a partir do nome e do endereco em `mapsLink()`. Sem
+ * mapa incorporado: nao ha embed validado, e nao inventamos Place ID,
+ * coordenadas ou imagem que simule uma rota.
  *
- * Nao existe tabela de horarios aqui porque a empresa so confirmou
- * "atendimento com horário agendado".
+ * Nao existe tabela de horarios aqui porque a empresa nao informou a grade da
+ * semana. "Fecha as 19h" no Maps e um estado momentaneo, nao uma grade.
  */
 import { business } from '../data/business';
-import { telLink, whatsappLink } from '../lib/contact';
+import { mapsLink, telLink, whatsappLink } from '../lib/contact';
 import { CalendarIcon, ExternalIcon, MapPinIcon, PhoneIcon, WhatsAppIcon } from './Icons';
 import './location.css';
 
@@ -18,9 +19,9 @@ export function Location() {
     <>
       <div className="section__head">
         <span className="section__eyebrow">Localização</span>
-        <h2 className="section__title">Estamos em {business.cityShort}.</h2>
+        <h2 className="section__title">Estamos no {business.cityShort}.</h2>
         <p className="section__text">
-          Endereço e contato direto com a equipe. O horário é combinado antes da visita.
+          Endereço completo da loja e contato direto com a equipe.
         </p>
       </div>
 
@@ -39,11 +40,11 @@ export function Location() {
           </address>
           <a
             className="btn btn--primary location__cta"
-            href={business.mapsUrl}
+            href={mapsLink()}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Ver localização no Google Maps
+            Abrir no Google Maps
             <ExternalIcon className="btn__icon" />
           </a>
         </div>
@@ -78,7 +79,7 @@ export function Location() {
           </ul>
 
           <p className="note location__note">
-            Os horários de cada dia da semana ainda não foram informados pela empresa.
+            Os horários de cada dia da semana ainda não foram informados pela loja.
           </p>
         </div>
       </div>

@@ -1,56 +1,69 @@
-# Tarefas P0 — Essência Animal Vet (prévia)
+# Tarefas — Animalandia Pet Shop (prévia)
 
-Estado real no fim da implementação. Itens curtos e verificáveis, conforme a
-Etapa A do SDD.
+Estado real no fim da adaptação, na branch `clientes/animalandia`.
 
-## Etapa A — Inspeção e decisões
+## Preparação
 
-- [x] Ler o SDD inteiro antes de escrever código.
-- [x] Inspecionar a pasta e identificar os 4 assets fornecidos (1536×1024, 3:2).
-- [x] Conferir visualmente cada imagem e confirmar o conteúdo de cada arquivo.
-- [x] Escolher a stack (Vite + React + TS) e consultar as versões no registro npm.
-- [x] Registrar objetivo, dados, paleta, componentes e exclusões em `docs/spec.md`.
+- [x] Conferir a branch atual, o remoto e a árvore limpa antes de editar.
+- [x] Ler o SDD da prévia anterior como referência técnica e visual.
+- [x] Inspecionar stack, componentes, dados, metadados e a pasta `assets/`.
+- [x] Preservar a versão anterior intacta em `clientes/essencia-animal-vet`.
 
-## Etapa B — Base visual e primeira tela
+## Conteúdo
 
-- [x] Tokens de cor, tipografia, medidas e movimento em `styles/tokens.css`.
-- [x] Servir a fonte localmente (Plus Jakarta Sans, OFL) com fallback de sistema.
-- [x] Cabeçalho fixo com âncoras, CTA e menu móvel acessível.
-- [x] Faixa discreta "Prévia de site para avaliação".
-- [x] Abertura em duas colunas no desktop e empilhada no celular.
-- [x] Conferir escala e espaçamento antes de expandir os blocos.
+- [x] Trocar nome, endereço, CEP e telefone pelos dados da Animalandia.
+- [x] Centralizar tudo em `src/data/business.ts` (nada repetido nos componentes).
+- [x] Destacar banho e tosa como foco principal, com o rótulo da própria empresa.
+- [x] Apresentar produtos e acessórios como informação secundária.
+- [x] Criar a seção "Também temos na loja" com as seis categorias confirmadas.
+- [x] Separar peixes e coelhos em "Animais à venda", sem sugerir serviço.
+- [x] Tratar medicamentos só como categoria, sem uso, dosagem ou alegação.
+- [x] Remover consultas, vacinas, exames, cromoterapia e demais serviços não
+      confirmados.
+- [x] Reescrever "Conheça" sem tempo de mercado, equipe, certificação ou número
+      de clientes.
+- [x] Trocar a nota fixa de avaliações por um link para a ficha do Google.
+- [x] Reescrever as perguntas frequentes com respostas sustentadas pelos dados.
+- [x] Atualizar título da aba, descrição, Open Graph e textos de compartilhamento.
+- [x] Atualizar textos alternativos das imagens.
 
-## Etapa C — Página completa
+## Contato
 
-- [x] Três cartões de serviço de tamanho equilibrado, com imagens equivalentes.
-- [x] Área "Vamos conversar?" com seleção de assunto e prévia da mensagem.
-- [x] Seção "Conheça" com pontos confirmados, composição ilustrativa e avaliação datada.
-- [x] Espaço reservado para até três fotos reais (`business.realPhotos`).
-- [x] Localização com endereço, telefone clicável e link do perfil do Maps.
-- [x] FAQ em acordeão nativo com as quatro perguntas do SDD.
-- [x] Rodapé com identificação da demonstração e autoria da proposta.
-- [x] Barra de contato no celular, com espaço correspondente no fim da página.
-- [x] Conferir que nenhum botão ficou com `href="#"` ou sem função.
+- [x] Montar todos os links com `encodeURIComponent`.
+- [x] Mensagens próprias para banho e tosa, produtos e cada categoria da loja.
+- [x] Botão "Consultar disponibilidade" com a mensagem confirmada no escopo.
+- [x] Deixar claro, em três pontos da página, que abrir o WhatsApp é consulta e
+      não reserva.
+- [x] Link do mapa como busca por nome e endereço, sem Place ID nem coordenadas.
 
-## Etapa D — Verificação
+## Visual
 
-- [x] `npm run build` (typecheck + bundle) sem erros.
-- [x] Teste focado da função geradora do WhatsApp (8 casos, todos passando).
-- [x] Passagem manual: navegação, menu, seleção de serviço, CTA e FAQ.
-- [x] Varredura de 320 a 1374 px procurando rolagem horizontal e sobreposição.
-- [x] Conferência de contraste nos textos e estados.
-- [x] Teste do fallback de imagem com arquivo inexistente.
-- [x] Console sem erros de aplicação no fluxo principal.
+- [x] Paleta provisória própria, só em `src/styles/tokens.css`.
+- [x] Favicon e marca tipográfica provisórios, sem logotipo inventado.
+- [x] Ícones novos para as categorias, no mesmo traço dos existentes.
+- [x] Remover o ícone de estetoscópio e a imagem de atendimento veterinário.
+- [x] Rótulo de destaque sobre a imagem, para os cartões não desalinharem.
+- [x] Número de colunas do catálogo definido por medição, não por chute.
 
-## Etapa E — Entrega
+## Verificação
 
-- [x] README com comandos, dados editáveis, origem dos assets e troca de identidade.
-- [x] `docs/spec.md`, `docs/tasks.md` e `docs/validation.md`.
-- [x] Capturas de desktop e celular em `docs/screenshots/`.
-- [x] Lista do que depende de informação da empresa (em `docs/validation.md`).
+- [x] `npm run build` (typecheck + build) sem erros.
+- [x] `npm test` — 19 testes passando.
+- [x] Teste que falha se algum dado da empresa anterior reaparecer.
+- [x] Teste que falha se surgir serviço veterinário, preço, horário fixo ou
+      contagem de avaliações.
+- [x] Conferência de 320 a 1440 px: sem rolagem horizontal e sem texto cortado.
+- [x] Auditoria dos 30 links da página renderizada.
+- [x] Contraste da paleta calculado par a par.
 
-## Não feito, por decisão registrada
+## Fora do MVP, de propósito
 
-- [ ] Mapa incorporado — só entra com um embed oficial válido.
-- [ ] Galeria de fotos reais e visualizador — depende de material autorizado.
-- [ ] Lighthouse — ferramenta não disponível neste ambiente (ver `validation.md`).
+- Carrinho, checkout, estoque, pagamento e painel administrativo — a empresa
+  informou que não vende pelo site e não tem disponibilidade para administrá-lo.
+- Agendamento automático e confirmação de horário: a página só prepara a
+  conversa.
+- Grade de horários, preços, taxas e área de entrega: não foram informados.
+- Dados estruturados `LocalBusiness`: dependem de horários reais.
+- Analytics, pixels, cookies e política jurídica fictícia.
+- Fotos reais da loja, da equipe e dos produtos: dependem de material autorizado.
+- Publicação e deploy: fora desta etapa.

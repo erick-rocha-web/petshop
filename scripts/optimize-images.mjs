@@ -16,10 +16,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_DIR = path.join(root, 'assets');
 const OUTPUT_DIR = path.join(root, 'public', 'images');
 
-/** Origem -> nome descritivo da copia + larguras geradas. */
+/**
+ * Origem -> nome descritivo da copia + larguras geradas.
+ *
+ * `assets/atendimento-veterinario.png` continua preservado no repositorio, mas
+ * NAO entra nesta lista: a Animalandia nao presta atendimento veterinario e a
+ * pagina nao pode sugerir esse servico.
+ */
 const IMAGES = [
   { source: 'hero-pets.png', name: 'hero-cachorro-e-gato', widths: [800, 1200], quality: 82 },
-  { source: 'atendimento-veterinario.png', name: 'servico-atendimento-veterinario', widths: [480, 720], quality: 80 },
   { source: 'banho-e-tosa.png', name: 'servico-banho-e-tosa', widths: [480, 720], quality: 80 },
   { source: 'pet-store.png', name: 'servico-pet-store', widths: [480, 720], quality: 80 },
 ];

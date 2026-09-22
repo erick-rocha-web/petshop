@@ -1,9 +1,11 @@
 /*
  * Tokens visuais da previa.
  *
- * A paleta vem do SDD (proposta, ainda NAO oficial da empresa). Se a Essência
- * Animal Vet fornecer identidade visual real, troque os valores abaixo: nenhum
- * componente escreve cor literal.
+ * A paleta e uma PROPOSTA desta demonstracao, nao a identidade oficial da
+ * Animalandia Pet Shop: a empresa nao forneceu logotipo nem cores. O azul-petroleo
+ * e o tom de areia foram escolhidos para a leitura de banho e tosa — limpo,
+ * acolhedor e legivel — e ficam todos aqui. Se a loja fornecer identidade real,
+ * troque os valores abaixo: nenhum componente escreve cor literal.
  */
 
 @font-face {
@@ -18,19 +20,25 @@
 
 :root {
   /* ---- Cores ---- */
-  --c-bg: #f7f6f2;
+  --c-bg: #f6f4ef;
   --c-surface: #ffffff;
-  --c-primary: #164a3d;
-  --c-primary-strong: #0f3a2f;
-  --c-primary-soft: #e8efe8;
-  --c-text: #24332d;
-  --c-text-muted: #59685f;
-  --c-border: #d8e1d9;
-  --c-accent: #d7ae7c;
+  --c-primary: #15586b;
+  --c-primary-strong: #0f4353;
+  --c-primary-soft: #e4f0f3;
+  --c-text: #23323a;
+  --c-text-muted: #5a6b73;
+  --c-border: #d6e2e6;
+  --c-accent: #f0a05a;
 
   /* Derivados de apoio (sempre a partir da paleta acima) */
   --c-surface-alt: #fbfaf7;
-  --c-focus: #164a3d;
+  --c-border-strong: #b9d2da;
+  --c-focus: #15586b;
+
+  /* Mesmas cores em canais separados, para fundos com transparencia. */
+  --c-primary-rgb: 21 88 107;
+  --c-primary-soft-rgb: 228 240 243;
+  --c-accent-rgb: 240 160 90;
 
   /* ---- Tipografia ---- */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
@@ -59,9 +67,9 @@
   --r-pill: 999px;
 
   /* ---- Elevacao (leve e seletiva) ---- */
-  --shadow-sm: 0 1px 2px rgba(22, 74, 61, 0.05);
-  --shadow-md: 0 8px 24px -12px rgba(22, 74, 61, 0.18);
-  --shadow-lg: 0 20px 48px -24px rgba(22, 74, 61, 0.28);
+  --shadow-sm: 0 1px 2px rgb(var(--c-primary-rgb) / 0.05);
+  --shadow-md: 0 8px 24px -12px rgb(var(--c-primary-rgb) / 0.18);
+  --shadow-lg: 0 20px 48px -24px rgb(var(--c-primary-rgb) / 0.28);
 
   /* ---- Movimento ---- */
   --t-fast: 160ms;
