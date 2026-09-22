@@ -1,0 +1,9 @@
+<!-- Marca provisoria: monograma tipografico da previa, nao o logotipo oficial da empresa. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Essência Animal Vet">
+  <rect width="64" height="64" rx="16" fill="#164A3D" />
+  <path
+    d="M24 20h17v6.2H30.8v6.1h9.4v6.1h-9.4v6.4H41.4V51H24z"
+    fill="#F7F6F2"
+  />
+  <circle cx="45" cy="17" r="4.2" fill="#D7AE7C" />
+</svg>

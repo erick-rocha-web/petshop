@@ -1,0 +1,58 @@
+.mobile-bar {
+  position: fixed;
+  z-index: 45;
+  inset: auto 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px var(--gutter);
+  padding-bottom: calc(9px + env(safe-area-inset-bottom, 0px));
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-top: 1px solid var(--c-border);
+  box-shadow: 0 -6px 20px -12px rgba(22, 74, 61, 0.35);
+}
+
+.mobile-bar__label {
+  flex: 1;
+  min-width: 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+}
+
+.mobile-bar__cta {
+  flex: none;
+  min-height: 44px;
+  padding-inline: 16px;
+  font-size: var(--fs-xs);
+}
+
+/* Telas muito estreitas (360 px): o botao ocupa a barra inteira. */
+@media (max-width: 400px) {
+  .mobile-bar__label {
+    display: none;
+  }
+
+  .mobile-bar__cta {
+    flex: 1;
+    font-size: var(--fs-sm);
+  }
+}
+
+/*
+ * Espaco correspondente no fim da pagina (RF-04): a barra mede 63 px
+ * (9 + 44 + 9 + 1 de borda), entao reservamos 68 px + area segura para sobrar
+ * folga e nunca cobrir a ultima linha do rodape.
+ */
+@media (max-width: 879px) {
+  body {
+    --mobile-bar-space: calc(68px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (min-width: 880px) {
+  .mobile-bar {
+    display: none;
+  }
+}

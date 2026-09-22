@@ -1,0 +1,111 @@
+/* Dois cartoes de acabamento equivalente: endereco e horarios/contato. */
+
+.location {
+  display: grid;
+  gap: 16px;
+}
+
+.location__card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.location__badge {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 14px;
+  border-radius: var(--r-sm);
+  background: var(--c-primary-soft);
+  color: var(--c-primary);
+}
+
+.location__badge-icon {
+  width: 21px;
+  height: 21px;
+}
+
+.location__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+}
+
+.location__address {
+  margin-top: 10px;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.location__text {
+  margin-top: 10px;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.location__cta {
+  margin-top: auto;
+  padding-top: 0;
+  align-self: flex-start;
+  margin-block-start: 20px;
+}
+
+.location__contacts {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.location__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  color: var(--c-primary);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color var(--t-base) var(--ease), background-color var(--t-base) var(--ease);
+}
+
+.location__link:hover {
+  border-color: var(--c-primary);
+  background: var(--c-primary-soft);
+}
+
+.location__link-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.location__note {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .location {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  .location__card {
+    padding: 26px;
+  }
+
+  .location__contacts {
+    grid-auto-flow: column;
+    justify-content: start;
+  }
+}

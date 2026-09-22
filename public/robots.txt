@@ -1,0 +1,5 @@
+# Previa comercial da Essencia Animal Vet, publicada apenas para avaliacao.
+# O bloqueio e intencional e acompanha a meta tag "noindex, nofollow".
+# Isso orienta mecanismos de busca; nao e controle de acesso.
+User-agent: *
+Disallow: /

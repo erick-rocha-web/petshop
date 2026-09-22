@@ -1,0 +1,107 @@
+/* Acordeao nativo, sem animacao longa. */
+
+.faq-layout {
+  display: grid;
+  gap: 28px;
+}
+
+.faq-layout__head {
+  max-width: 34rem;
+}
+
+.faq-layout__cta {
+  margin-top: 20px;
+}
+
+.faq {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.faq__item {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  transition: border-color var(--t-base) var(--ease);
+}
+
+.faq__item[open] {
+  border-color: #c3d4c6;
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  padding: 14px 18px;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq__question:hover {
+  color: var(--c-primary);
+}
+
+/* Sinal de abrir/fechar: um "+" que vira "−" (forma, nao so cor). */
+.faq__marker {
+  position: relative;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--c-primary-soft);
+}
+
+.faq__marker::before,
+.faq__marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 2px;
+  background: var(--c-primary);
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  transition: transform var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
+}
+
+.faq__marker::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq__item[open] .faq__marker::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.faq__answer {
+  padding: 0 18px 18px;
+  max-width: 44rem;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+@media (min-width: 900px) {
+  .faq-layout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 56px;
+    align-items: start;
+  }
+
+  /* O titulo acompanha a leitura enquanto as perguntas sao abertas. */
+  .faq-layout__head {
+    position: sticky;
+    top: calc(var(--header-h) + 28px);
+  }
+}

@@ -1,0 +1,112 @@
+/* Cartoes de servico: mesma altura, mesma densidade e imagens de area identica. */
+
+.services {
+  display: grid;
+  gap: 18px;
+  /* Abaixo de 900px os cartoes empilham em coluna unica e centrada: os tres
+     mantem exatamente o mesmo tamanho e o enquadramento original 3:2. */
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease),
+    transform var(--t-base) var(--ease);
+}
+
+.service-card:hover {
+  border-color: #c3d4c6;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.service-card__media {
+  flex: none;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.service-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+}
+
+.service-card__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+}
+
+.service-card__icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--c-primary);
+}
+
+.service-card__text {
+  margin-top: 8px;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.service-card__items {
+  display: grid;
+  gap: 7px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
+}
+
+.service-card__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: var(--fs-sm);
+  line-height: 1.45;
+}
+
+.service-card__check {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 4px;
+  color: var(--c-primary);
+}
+
+/* `margin-top: auto` alinha os botoes dos tres cartoes na mesma linha. */
+.service-card__cta {
+  margin-top: auto;
+}
+
+/* Selecao nunca depende so de cor: muda borda, fundo e peso do rotulo. */
+.service-card__cta[aria-pressed='true'] {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+.service-card__cta[aria-pressed='true']::after {
+  content: '✓';
+  font-size: 0.95em;
+}
+
+@media (min-width: 900px) {
+  .services {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    max-width: none;
+  }
+}
